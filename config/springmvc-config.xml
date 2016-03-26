@@ -2,14 +2,26 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
 	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context-4.2.xsd">	
+	http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+		
+	<!-- 扫描包 -->
 	<context:component-scan base-package="edu.ahu.cst.zsd.controller"/>
-	<bean name="/product_input.action" class="edu.ahu.cst.zsd.controller.ProductController"/>
+	
+	<!-- 注册用于支持基于注解的控制器的请求处理方法的bean对象 ，若不使用resources属性，则不需要该配置-->
+	<mvc:annotation-driven/>
+	
+	<!-- resources 指示哪些静态资源不需要通过dispatcher servlet处理 -->
+	<mvc:resources location="/resources/styles/" mapping="/resources/styles/**"></mvc:resources>
+	<mvc:resources location="/" mapping="/*.html"></mvc:resources>
+	<!-- 视图解析器，负责解析视图 配置前缀和后缀 视图解析器将会自动加上前缀和后缀 -->
 	<bean id="viewResolver" class=" org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp"></property>
 		<property name="suffix" value=".jsp"></property>
